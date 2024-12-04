@@ -1,0 +1,57 @@
+// package.json
+{
+  "name": "fp-utm-builder",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@headlessui/react": "^1.7.17",
+    "@react-oauth/google": "^0.12.1",
+    "jwt-decode": "^4.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.3.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react": "^7.33.2",
+    "postcss": "^8.4.32",
+    "vite": "^5.0.0"
+  }
+}
+
+// vite.config.js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 3000,
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+  },
+  define: {
+    'process.env': process.env,
+  },
+});
+
+// .env.example
+REACT_APP_GOOGLE_CLIENT_ID=your_google_client_id_here
+
+// .gitignore
+node_modules/
+dist/
+.env
+.env.local
+.DS_Store
+*.log
