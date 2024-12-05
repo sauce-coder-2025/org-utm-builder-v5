@@ -1,0 +1,46 @@
+# .github/workflows/deploy.yml
+name: Deploy React App to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    concurrency: ci-${{ github.ref }}
+    
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install Dependencies
+        run: |
+          echo "Installing dependencies..."
+          npm install
+          
+      - name: Build site 🔧
+        run: |
+          echo "Building the site..."
+          npm run build
+          
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist           # The folder containing our built React app
+          branch: gh-pages      # The branch we're deploying to
+          clean: true          # Automatically remove deleted files
+          single-commit: true  # Maintain only the latest version in gh-pages
